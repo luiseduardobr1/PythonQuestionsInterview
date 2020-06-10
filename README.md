@@ -1,17 +1,5 @@
 # Python Questions Interview
 
-format spoiler:
-<details>
-  <summary>Answer</summary>
-  
-  Spoiler text. Note that it's important to have a space after the summary tag. You should be able to write any markdown you want inside the `<details>` tag... just make sure you close `<details>` afterward.
-  
-  ```javascript
-  console.log("I'm a code block!");
-  ```
-  
-</details>
-
 **1. What is the difference between ```nonlocal``` and ```global``` variable ?**
 <details>
   <summary>Answer</summary>
