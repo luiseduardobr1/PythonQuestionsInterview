@@ -1,11 +1,13 @@
 # Python Questions Interview
 
+## Basic Concepts
+
 **1. What is the difference between ```nonlocal``` and ```global``` variable ?**
 <details>
   <summary>Answer</summary>
-  
+
 Global statement permits modification of global variable in local scope and nonlocal statement permits modification of enclosing scope variable in local scope. The nonlocal statement does to enclosing scope variable what global statement does to the global variable. The nonlocal is a counterpat of the global statement. Example:
-  
+
   ```Python
 def scope_test():
     def do_local():
@@ -44,9 +46,9 @@ Sources: [Python3 Docs](https://docs.python.org/3/tutorial/classes.html) and [Ca
 **2. What is the difference between ```immutable``` and ```mutable``` objects ?**
 <details>
   <summary>Answer</summary>
-  
+
   Since everything in Python is an Object, every variable holds an object instance. When an object is initiated, it is assigned a unique object id. Its type is defined at runtime and once set can never change, however its state can be changed if it is mutable. Simple put, a mutable object can be changed after it is created, and an immutable object can’t.
-  
+
   ```
   Immutable Objects: int, float, bool, string, unicode, tuple, bytes, complex
 
@@ -63,13 +65,13 @@ Consider a tuple
 The tuple consists of a string and a list. Strings are immutable so we can’t change its value. But the contents of the list can change. The tuple itself isn’t mutable but contain items that are mutable.
 
 Sources: [Mutable vs Immutable Objects in Python - Megha Mohan](https://medium.com/@meghamohan/mutable-and-immutable-side-of-python-c2145cf72747) and [Geeks for Geeks](https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/)
-  
+
 </details>
 
 **3. What is the difference between ```is``` and ```==``` operators ?**
 <details>
   <summary>Answer</summary>
-  
+
 The ```==``` operator compares the values of two objects and returns **True** if the two objects have the same value. The ```is``` operator returns **True** only if the two objects being compared are the same object.
 
 You normally use the ```==``` operator except in a few special cases, one of which is where you are specifically comparing a value against ```None```. In that case you do ```if result is None:```.
@@ -91,20 +93,20 @@ False
 29971336
 ```
 Source: [r/learnpython](https://www.reddit.com/r/learnpython/comments/ee3pwk/what_is_the_difference_between_is_operators_in/)
-  
+
 </details>
 
 **4. How to copy the values (not reference) of a list and a dictionary ?**
 <details>
   <summary>Answer</summary>
-  
+
   * Copy a list to a new variable: 
   ```Python
 a = b[:]
   ```
-OBS: Pass by reference: ```a = b```, if you change the values of ```a```, it will change ```b``` too, because it's the same object. 
+OBS: Pass by reference: ```a = b```, if you change the values of ```a```, it will change ```b``` too, because it's the same object.
 
-  * Copy a dictionary to a new variable: 
+  * Copy a dictionary to a new variable:
   ```Python
 dict2 = dict(dict1)
 
@@ -120,13 +122,13 @@ import copy
 list2 = copy.deepcopy(list1)
 dict2 = copy.deepcopy(dict1)
 ```
-  
+
 </details>
 
 **5. Enumerate the differences between a list, dictionary and tuple.**
 <details>
   <summary>Answer</summary>
-  
+
 | Category         | List                                                          | Dictionary                                | Tuple                                         |
 |------------------|---------------------------------------------------------------|-------------------------------------------|-----------------------------------------------|
 | Type             | mutable/non-hashable                                          | mutable/non-hashable                      | immutable/hashable                            |
@@ -134,10 +136,46 @@ dict2 = copy.deepcopy(dict1)
 | Elements index   | Ordered, access by position                                   | Not-ordered*, access by "keys"            | Ordered, fixed position                       |
 | Particularity    | List can't be a dictionary's key, but it can be its "value"  | There aren't duplicate keys               | It can replace the list as dictionary's "key" |
 | Particularity    | -                                                             | There aren't restrictions of its "values" | -                                             |
-  
-\* After Python3.7, the position is preserved. 
+
+\* After Python3.7, the position is preserved.
 </details>
 
+## Classes / Magic Methods
 
+**1. What is the difference between ```__str__``` and ```__repr__``` ?**
+<details>
+  <summary>Answer</summary>
 
+The ```__str__``` is used to find the “informal” (readable) string representation of an object whereas ```__repr__``` is used to find the “official” string representation of an object.
 
+The difference between the formal and informal representations is that the default implementation of ```__repr__``` for a str value can be called as an argument to ```eval```, and the return value would be a valid string object. This function eval(repr()) takes a string and evaluates it’s content as python code. So when we pass "'Python'" to it, its work. However, ‘Python’ leads to an error cause it’s interpreted as the variable Python which is of course undefined.
+
+* ```repr()``` goal is to be unambiguous and ```str()``` is to be readable. Sometimes ```str(x) == repr(x)```.
+
+Example 1:
+
+  ```Python
+  >>> x = "Python"
+>>> repr(x)
+"'Python'"
+>>> x1 = eval (repr(x))
+>>> x == x1
+True
+```
+
+Example 2:
+
+  ```Python
+>>> y = "Python"
+>>> str(y)
+'Python'
+>>> y1 = eval(str(y))
+Traceback (most recent call last):
+File "<pyshell#51>", line 1, in <module>
+y1 = eval(str(y))
+File "<string>", line 1, in <module>
+NameError: name 'Python' is not defined
+  ```
+
+Sources: [TutorialsPoint](https://www.tutorialspoint.com/str-vs-repr-in-python) and [Geeks for Geeks](https://www.geeksforgeeks.org/str-vs-repr-in-python/)
+</details>
